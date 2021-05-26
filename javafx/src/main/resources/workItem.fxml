@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ListView?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.shape.Polygon?>
+<?import javafx.scene.text.Font?>
+
+<HBox fx:id="templateWorkPaneId" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" onDragDetected="#doDrag" prefHeight="180.0" prefWidth="528.0" styleClass="itemContainer" xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.bjason.taskdrag.javafx.IndividualWorkItemController">
+
+         <children>
+            <VBox fx:id="workVbox" layoutX="8.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" onDragDetected="#doDrag" prefHeight="141.0" prefWidth="519.0" spacing="5.0" styleClass="workAndFreeTextBackGround" stylesheets="@../../../../../../../home/src/spring/taskdrag/javafx/src/main/resources/fxstyle.css" AnchorPane.bottomAnchor="2.0" AnchorPane.topAnchor="2.0" HBox.hgrow="ALWAYS">
+               <children>
+            <HBox fx:id="workHbox" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" onMouseClicked="#expandIt" prefHeight="109.0" prefWidth="528.0" VBox.vgrow="ALWAYS">
+               <children>
+                  <Polygon fx:id="expandId" fill="DODGERBLUE" points="6.0, -43.0, 24.0, -43.0, 15.0, -60.0" stroke="BLACK" strokeType="INSIDE" />
+                  <Label fx:id="workTitleBar" prefHeight="16.0" prefWidth="103.0" text="Label">
+                     <font>
+                        <Font size="9.0" />
+                     </font>
+                     <padding>
+                        <Insets left="9.0" />
+                     </padding>
+                  </Label>
+               </children>
+            </HBox>
+                  <TextArea fx:id="titleFieldId" editable="true" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" onDragDetected="#doDrag" prefHeight="26.0" prefWidth="347.0" promptText="prompt" styleClass="workTitle" text="hello" VBox.vgrow="ALWAYS" />
+                  <ListView fx:id="freetextListViewId" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="109.0" onDragDetected="#doDrag" onMouseClicked="#doubleClickFreeText" prefHeight="109.0" prefWidth="467.0" styleClass="freeText" VBox.vgrow="ALWAYS" />
+               </children>
+            </VBox>
+         </children>
+</HBox>

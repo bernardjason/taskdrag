@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns="http://www.w3.org/1999/html">
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+</head>
+<body>
+<div th:fragment="update_note">
+
+    <!-- The Modal -->
+    <div id="updateWorkModal" class="modal">
+
+        <!-- Modal content -->
+        <div class="modal-content">
+            <span id="closeUpdateCross" onclick="closeUpdateModal()" class="close">&times;</span>
+            <form id="newTextForm">
+                work_id: <input type="text" readonly=true id="work_id" name="work_id"/>
+                status: <input type="text" readonly=true id="work_status" name="work_status"/>
+                title: <input type="text" id="work_title" name="work_title"/>
+            </form>
+            <button id="updateWorkButton" th:onclick="updateWork();">submit</button>
+        </div>
+
+    </div>
+
+    <script>
+        function closeUpdateModal() {
+                $("#updateWorkModal").css("display","none");
+        }
+        window.onclick = function(event) {
+            if (event.target.id == "updateWorkModal" ) {
+                closeUpdateModal();
+            }
+        }
+        $('.close').click(closeUpdateModal);
+        function showUpdateModal(source) {
+            work_id=$(source).attr('data-id');
+            work_status=$(source).attr('data-status');
+            work_title=$(source).attr('data-title');
+            $('#work_id').val(work_id);
+            $('#work_status').val(work_status);
+            $('#work_title').val(work_title);
+            $("#updateWorkModal").css("display","block");
+        }
+
+        function updateWork() {
+            id=$('#work_id').val();
+
+            update = { "id": $('#work_id').val(),
+                "status":$('#work_status').val(),
+                "title":$('#work_title').val(),
+             };
+             formData = JSON.stringify(update);
+            $.ajax({
+                type: "PUT",
+                url: "/work/"+id,
+                data: formData,
+                headers: { 'X-CSRF-TOKEN':$("meta[name='_csrf']").attr("content"), },
+                success: function(back){
+                    console.log("*** WORKED ***");
+                    closeUpdateModal();
+                    updateKanban();
+                },
+                error: function(back){
+                    console.log("*** FAILED!!!! ***");
+                    console.log(back.status_text);
+                    console.log(back.statusCode());
+                    openError("Update failed",JSON.stringify(back));
+                },
+                dataType: "json",
+                contentType : "application/json"
+            });
+        }
+
+    </script>
+
+</div>
+
+</body>
+</html>

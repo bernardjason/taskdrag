@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns="http://www.w3.org/1999/html">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<div  th:fragment="new_work">
+
+    <div class="newWork" id="new_work" ondrop="newWorkDrop(event)" ondragleave="newWorkDragLeave(this)" ondragover="newWorkDragOver(this,event)">
+        <h5>new task</h5>
+        <form id="newForm">
+            <input type="hidden" id="status" value="created" readonly=true name="status"/>
+            Title: <input size="100" type="text" id="title" name="title"/>
+        </form>
+        <button id="newWorkButton" th:onclick="newForm();">submit</button>
+    </div>
+</div>
+
+<script>
+    function newForm() {
+        form =document.getElementById("newForm");
+        data = new FormData(form);
+        value = Object.fromEntries(data.entries());
+
+        formData = JSON.stringify(value);
+        var token = $("meta[name='_csrf']").attr("content");
+        var header = $("meta[name='_csrf_header']").attr("content");
+        $.ajax({
+            type: "POST",
+            url: "/work",
+            data: formData,
+            headers: { 'X-CSRF-TOKEN':$("meta[name='_csrf']").attr("content"), },
+            success: function(back){
+                console.log("*** WORKED ***");
+                form.reset();
+                updateAllEntries();
+                updateKanban();
+            },
+            error: function(back){
+                console.log("*** FAILED!!!! ***");
+                console.log(back.status_text);
+                console.log(back.statusCode());
+                openError("new work failed",JSON.stringify(back));
+
+            },
+            dataType: "json",
+            contentType : "application/json"
+        });
+    }
+
+
+function newWorkDragOver(what,ev) {
+    ev.preventDefault();
+    $(what).css("background-color", "black");
+    $(what).css("color", "white");
+}
+function newWorkDragLeave(what,ev) {
+    $(what).css("background-color", "white");
+    $(what).css("color", "black");
+}
+
+function newWorkDrop(ev) {
+    ev.preventDefault();
+    console.log("NEW DROPPED EVENT");
+
+    if (ev.dataTransfer.items) {
+        // Use DataTransferItemList interface to access the file(s)
+        for (var i = 0; i < ev.dataTransfer.items.length; i++) {
+          // If dropped items aren't files, reject them
+          if (ev.dataTransfer.items[i].kind === 'file') {
+            var file = ev.dataTransfer.items[i].getAsFile();
+            console.log('... file[' + i + '].name = ' + file.name);
+            $('#title').val(file.name);
+            $('#status').val("created");
+            newForm();
+          }
+        }
+        newWorkDragLeave($('#new_work'));
+    } else{
+        console.log("What??? "+ev.target+"  ");
+    }
+}
+
+/* this causes the page to reload */
+$('#title').keypress(function(e){
+    if(e.which == 13) {
+        e.preventDefault();
+        //newForm();
+   }
+});
+
+</script>
+
+
+
+</body>
+</html>

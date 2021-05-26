@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns="http://www.w3.org/1999/html">
+<div id="admin" th:fragment="admin" style="display:none">
+    <script>
+    function updateForm(id) {
+
+        data = new FormData(document.getElementById("form_"+id));
+        value = Object.fromEntries(data.entries());
+
+        formData = JSON.stringify(value);
+        $.ajax({
+            type: "PUT",
+            url: "/work/"+id,
+            data: formData,
+            headers: { 'X-CSRF-TOKEN':$("meta[name='_csrf']").attr("content"), },
+            success: function(back){
+                console.log("*** WORKED ***");
+                console.log(formData);
+                inputs = $('#form_'+id+' :input');
+                inputs.each(function() {
+                    if ( this.type == "text" ) {
+                        $("#form_"+id+" #"+this.name).attr("value", $(this).val());
+                    }
+                });
+                updateKanban();
+            },
+            error: function(back){
+                console.log("*** FAILED!!!! ***");
+                console.log(back.status_text);
+                console.log(back.statusCode());
+                openError("Update failed",JSON.stringify(back));
+            },
+            dataType: "json",
+            contentType : "application/json"
+        });
+    }
+
+    </script>
+
+    <div th:replace="all_entries">
+    </div>
+    <!-- all_entries done -->
+</div>
+
+</html>

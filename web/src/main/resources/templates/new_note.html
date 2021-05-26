@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns="http://www.w3.org/1999/html">
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+</head>
+<body>
+<div th:fragment="new_note">
+
+
+    <!-- The Modal -->
+    <div id="newNoteModal" class="modal">
+
+        <!-- Modal content -->
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h3 id="notetitle">header</h3>
+            <form id="newTextForm">
+                <input type="hidden" readonly=true id="freetext_work_id" name="freetext_work_id"/>
+                text: <input size="50" type="text" id="freetext_text" name="freetext_text" />
+            </form>
+            <button th:onclick="newNote();">submit</button>
+        </div>
+
+    </div>
+
+    <script>
+        /* this causes the page to be reloaded
+        */
+        $('#freetext_text').keypress(function(e){
+            if(e.which == 13) {
+                //newNote();
+                e.preventDefault();
+            }
+        })
+        function closeModal() {
+                $("#newNoteModal").css("display","none");
+        }
+        window.onclick = function(event) {
+            if (event.target.id == "newNoteModal" ) {
+                closeModal();
+            }
+        }
+        $('.close').click(closeModal);
+        function showAddNewNote(source) {
+            work_id=$(source).attr('data-id');
+            work_status=$(source).attr('data-status');
+            work_title=$(source).attr('data-title');
+
+            $('#notetitle').text(work_title);
+            $('#freetext_work_id').val(work_id);
+            $("#newNoteModal").css("display","block");
+            $('#freetext_text').focus();
+
+        }
+        function newNote(id) {
+            freetext_text = $('#freetext_text').val();
+            freetext_work_id = $('#freetext_work_id').val();
+
+            freetext = { "text": freetext_text , "work":{ "id" : freetext_work_id } }
+
+            formData = JSON.stringify(freetext);
+            $.ajax({
+                type: "POST",
+                url: "/freetext",
+                data: formData,
+                headers: { 'X-CSRF-TOKEN':$("meta[name='_csrf']").attr("content"), },
+                success: function(back){
+                    $('#freetext_text').val("");
+                    closeModal();
+                    updateAllEntries();
+                    updateKanban();
+                },
+                error: function(back){
+                    closeModal();
+                    console.log("*** FAILED!!!! ***");
+                    console.log(back.status_text);
+                    console.log(back.statusCode());
+                    openError("new note failed",JSON.stringify(back));
+                },
+                dataType: "json",
+                contentType : "application/json"
+            });
+        }
+
+
+    </script>
+
+</div>
+
+</body>
+</html>

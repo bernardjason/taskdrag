@@ -1,0 +1,136 @@
+<script>
+
+function allowDropOntoKanban(what,ev) {
+    ev.preventDefault();
+    $(what).css("background-color", "lightgrey");
+    $(what).css("color", "white");
+}
+function dragLeaveKanban(what,ev) {
+    $(what).css("background-color", "white");
+    $(what).css("color", "black");
+}
+
+function drag(ev) {
+work_id = ev.target.id;
+ev.dataTransfer.setData("text", work_id);
+console.log("Drag started "+work_id);
+}
+
+function dropOntoKanban(ev) {
+    ev.preventDefault();
+
+    work_id = ev.dataTransfer.getData("text");
+    if ( work_id != "" ) {
+        console.log("!!!! Drop "+work_id);
+        dest=$(ev.target).parents();
+        dest.push(ev.target);
+        dataDisplayOrder=0;
+        for(i=dest.length-1 ; i >= 0 ;i--) {
+            dataStatus=$(dest[i]).attr("data-status");
+            onto=$(dest[i]).attr("data-displayOrder");
+            if ( onto !== undefined ) {
+               dataDisplayOrder=dataDisplayOrder+parseInt(onto);
+               console.log("Found display order "+dataDisplayOrder);
+            }
+            if ( dataStatus == "state") {
+                status = dest[i].id;
+                dataDisplayOrder = dataDisplayOrder + 1;
+                console.log("HERE "+dest[i]+" "+dest[i].id+"  "+dataDisplayOrder);
+                changeKanbanState(work_id,status,dataDisplayOrder);
+                break;
+            } else {
+                console.log("XX "+dest[i]+" "+dest[i].id+"  "+dataDisplayOrder);
+            }
+        }
+        console.log("Drop "+work_id+"  to "+ev.target+"  ");
+    }
+    //console.log($(ev.target));
+    dest=$(ev.target).parents();
+        for(i=0 ; i < dest.length;i++) {
+            dragLeaveKanban(dest[i]);
+     }
+}
+
+function changeKanbanState(work_id,status,displayOrder) {
+    if ( displayOrder === undefined ) {
+        displayOrder = 0;
+    }
+    $.ajax({
+        type: "PUT",
+        url: "/work/"+work_id+"/"+status,
+        data : {"displayOrder":displayOrder},
+        headers: { 'X-CSRF-TOKEN':$("meta[name='_csrf']").attr("content"), },
+        success: function(back){
+            //console.log("*** WORKED ***");
+            updateKanban();
+            updateAllEntries();
+        },
+        error: function(back){
+            console.log("*** FAILED!!!! ***");
+            console.log(back.status_text);
+            console.log(back.statusCode());
+            openError("Update failed",JSON.stringify(back));
+        },
+    });
+}
+
+function dropOntoBin(ev,bin) {
+    ev.preventDefault();
+    work_id = ev.dataTransfer.getData("text");
+    if ( work_id != "" ) {
+        //console.log("Bin "+work_id);
+        changeKanbanState(work_id,"remove");
+    }
+    dragLeaveBin(ev,bin);
+}
+function dragOverBin(ev,bin) {
+    ev.preventDefault();
+    $(bin).css("background-color", "#f4f4f4");
+    $(bin).css("color", "red");
+}
+function dragLeaveBin(ev,bin) {
+    $(bin).css("background-color", "#f4f4f4");
+    $(bin).css("color", "black");
+}
+
+
+</script>
+
+
+<div id="kanban" th:fragment="kanban" >
+
+
+    <div id="bin" class="bindiv" ondrop="dropOntoBin(event,this)" ondragover="dragOverBin(event,this)" ondragleave="dragLeaveBin(event,this)">
+        <i class="bin w3-xxxlarge fa fa-trash"  ></i>
+    </div>
+    <div class="row">
+        <div th:each="criteria:${@allStates}">
+            <div class="column" data-status="state" th:id="${criteria}" ondrop="dropOntoKanban(event)" ondragleave="dragLeaveKanban(this)"
+                 ondragover="allowDropOntoKanban(this,event)" ><h2 th:class="${criteria}">[[${criteria}]]</h2>
+
+                <div class="row" th:id="${work.id}" draggable="true"
+                             ondragstart="drag(event)" th:each="work : ${allWork}"
+                             th:if="${work.status} == ${criteria}"
+                     >
+                    <div class="workTitle"
+                         th:attr="data-id=${work.id},data-displayOrder=${work.displayOrder},data-status=${work.status},data-title=${work.title}"
+                         onclick="showUpdateModal(this)">
+                        [[${work.title}]]
+                    </div>
+                    <div class="freetextColumn"
+                         th:attr="data-id=${work.id},data-title=${work.title}"
+                         onclick="showAddNewNote(this)">
+                        <div class="freetext" th:each="freeText : ${allFreeText.get(work.id)}">
+                            <div class="datetooltip"><p th:text="${#dates.format(freeText.getCreated(),'dd-MM-yy')}"></p>
+                                <span class="datetooltiptext">[[${freeText.getCreated()}]]</span>
+                            </div>
+                            [[${freeText.getText()}]]
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+    <div th:insert="update_work"></div>
+</div>

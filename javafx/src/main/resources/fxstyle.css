@@ -1,0 +1,126 @@
+
+
+.text-field {
+    -fx-background-color:  pink;
+}
+
+
+#work {
+    -fx-background-color: green;
+}
+
+.button {
+    -fx-background-color: #809fff;
+        -jfx-button-type: raised;
+        -fx-text-fill: black;
+         -fx-background-radius: 30;
+      -fx-effect: dropshadow( three-pass-box , rgba(0,0,0,0.6) , 5, 0.0 , 0 , 1 );
+}
+.refresh {
+    -fx-background-color: #bfbfbf;
+}
+
+.button:pressed {
+    -fx-background-color: #909090;
+}
+
+.newWorkTitle {
+-fx-font-size:20;
+}
+
+.workTitle {
+    -fx-background-color: #e6e6ff;
+}
+.enterFreeText{
+    -fx-background-color: #e6f2ff;
+}
+.freeText {
+    -fx-background-color: #e6e6e6;
+}
+.list-cell {
+    -fx-background-color: null;
+}
+.workAndFreeTextBackGround {
+    -fx-background-color: #eee;
+}
+.itemContainer {
+    -fx-background-color: #ccc;
+}
+.newWorkModal {
+    -fx-background-color: #e6f2ff;
+}
+.newFreeTextModal {
+    -fx-background-color: #e6f2ff;
+}
+.okButton {
+    -fx-text-fill: #ffffff;
+    -fx-background-color: #6156b9;
+}
+.cancelButton {
+    -fx-text-fill: #ffffff;
+    -fx-background-color: #1b0d8a;
+}
+.bin {
+    -fx-background-color: #f4f4f4;
+    -fx-effect:null ;
+}
+.bin:pressed {
+    -fx-background-color: #f4f4f4;
+    -fx-effect:null ;
+}
+
+.titlecell {
+    -fx-border-style: dotted dotted dotted dotted;
+    -fx-border-color: gray ;
+    -fx-background-color:#ffb3b3;
+    -fx-border-width: 1 ;
+}
+
+// this is a bit naff but didnt want it lighter shade.
+.menu-item:disabled {
+    -fx-opacity: 1.0;
+}
+.menu-item:disabled .label {
+    -fx-opacity: 1.0;
+}
+.menu-item:hover:disabled {
+    -fx-background-color: gray;
+    -fx-text-fill: black;
+}
+
+
+.freeTextTitle {
+    -fx-font-size:20;
+}
+
+.XXXXcreated{
+    -fx-background-color:#ffb3b3;
+}
+.XXXXinprogress{
+    -fx-background-color:#ccffcc;
+}
+.XXXXdone{
+    -fx-background-color:#ffff99;
+}
+.XXXXcreatedScrollPane {
+    -fx-border-color: #ffb3b3;
+    -fx-border-width: 1px;
+    -fx-padding: 5;
+    -fx-spacing: 8;
+}
+.XXXXinprogressScrollPane {
+    -fx-border-color: #ccffcc;
+    -fx-border-width: 1px;
+    -fx-padding: 5;
+    -fx-spacing: 8;
+}
+.XXXXdoneScrollPane {
+    -fx-border-color: #ffff99;
+    -fx-border-width: 1px;
+    -fx-padding: 5;
+    -fx-spacing: 8;
+}
+.mainTitle {
+    -fx-font-size:20;
+    -fx-text-fill: #000000;
+}

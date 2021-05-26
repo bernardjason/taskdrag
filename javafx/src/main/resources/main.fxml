@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ContextMenu?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.MenuItem?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<HBox fx:id="toplevelId" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" prefHeight="300.0" prefWidth="500.0" stylesheets="@../../../../../../../home/src/spring/taskdrag/javafx/src/main/resources/fxstyle.css"  xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.bjason.taskdrag.javafx.MainSceneController">
+    <children>
+        <VBox fx:id="mainVbox" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" prefHeight="300.0" prefWidth="200.0" HBox.hgrow="ALWAYS">
+            <children>
+                <AnchorPane>
+                    <children>
+                        <ImageView fitHeight="150.0" fitWidth="200.0" layoutY="3.0" pickOnBounds="true" preserveRatio="true" AnchorPane.leftAnchor="3.0">
+                            <image>
+                                <Image url="/header.png" />
+                            </image>
+                        </ImageView>
+                        <HBox alignment="CENTER_RIGHT" maxWidth="1.7976931348623157E308" minWidth="-Infinity" nodeOrientation="LEFT_TO_RIGHT" spacing="10.0" AnchorPane.rightAnchor="0.0" GridPane.columnIndex="1" GridPane.halignment="RIGHT" HBox.hgrow="ALWAYS" VBox.vgrow="NEVER">
+                            <children>
+                                <Button fx:id="playButtonId" mnemonicParsing="false" onAction="#refreshButtonPressed" prefHeight="39.0" prefWidth="68.0" styleClass="refresh" text="Refresh">
+                                    <HBox.margin>
+                                        <Insets top="4.0" />
+                                    </HBox.margin>
+                                </Button>
+                                <Button fx:id="newWork" alignment="CENTER_RIGHT" contentDisplay="RIGHT" mnemonicParsing="false" onAction="#openNewWorkDialog" prefHeight="39.0" prefWidth="82.0" text="New work">
+                                    <HBox.margin>
+                                        <Insets top="4.0" />
+                                    </HBox.margin>
+                                </Button>
+                                <Button id="remove" fx:id="binButton" contentDisplay="TOP" mnemonicParsing="false" onDragDropped="#doDragDropped" onDragOver="#dragOverBin" prefHeight="48.0" prefWidth="69.0" styleClass="bin" text="BIN">
+                                    <contextMenu>
+                                        <ContextMenu fx:id="binContextMenu">
+                                            <items>
+                                                <MenuItem mnemonicParsing="false" text="Undo" />
+                                            </items>
+                                        </ContextMenu>
+                                    </contextMenu>
+                                    <HBox.margin>
+                                    </HBox.margin>
+                                </Button>
+                                <ImageView fx:id="binImage" fitHeight="43.0" fitWidth="38.0" onDragDropped="#doDragDropped" onDragOver="#dragOverBin" pickOnBounds="true" preserveRatio="true">
+                                    <image>
+                                        <Image url="/bin.png" />
+                                    </image>
+                                </ImageView>
+                            </children>
+                            <VBox.margin>
+                                <Insets left="4.0" right="5.0" top="4.0" />
+                            </VBox.margin>
+                        </HBox>
+                    </children>
+                </AnchorPane>
+            <Label fx:id="loading" alignment="CENTER" contentDisplay="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" text="Loading...." textAlignment="CENTER" VBox.vgrow="ALWAYS">
+               <font>
+                  <Font size="47.0" />
+               </font>
+            </Label>
+
+                <GridPane fx:id="mainGridPain" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" prefHeight="200.0" prefWidth="200.0" VBox.vgrow="ALWAYS">
+                    <rowConstraints>
+                        <RowConstraints maxHeight="30.0" minHeight="30.0" percentHeight="5.0" prefHeight="30.0" vgrow="NEVER" />
+                        <RowConstraints percentHeight="95.0" vgrow="SOMETIMES" />
+                    </rowConstraints>
+                    <padding>
+                        <Insets bottom="4.0" left="4.0" right="4.0" top="4.0" />
+                    </padding>
+               <columnConstraints>
+               </columnConstraints>
+                </GridPane>
+
+            </children>
+        </VBox>
+    </children>
+</HBox>

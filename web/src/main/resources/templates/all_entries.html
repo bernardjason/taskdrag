@@ -1,0 +1,33 @@
+<div id="all_entries" th:fragment="all_entries">
+    <table>
+        <thead>
+        <tr>
+            <th scope="col">work</th>
+            <th scope="col">text</th>
+        </tr>
+        </thead>
+        <tbody>
+
+        <tr th:id="${work_row.getId()}" draggable="true" ondragstart="drag(event)" th:each="work_row : ${allWork}">
+            <td>
+                <form th:onsubmit="'updateForm(\'' +${work_row.getId()} + '\');'" th:id="'form_' +${work_row.getId()}">
+                    Id: <input readonly=true type="text" id="id" name="id" th:value="${work_row.id}"/>
+                    Status: <input type="text" id="status" name="status"  th:value="${work_row.status}"/>
+                    Title: <input type="text" id="title" name="title" th:value="${work_row.title}"/>
+                    <input type="reset" value="reset"/>
+                </form>
+                <button th:onclick="'updateForm(\'' +${work_row.getId()} + '\');'">submit</button>
+            </td>
+            <td
+                th:attr="data-id=${work_row.id},data-status=${work_row.status},data-title=${work_row.title}"
+                onclick="showAddNewNote(this)">
+                <ol>
+                    <li th:each="freeText : ${allFreeText.get(work_row.id)}">
+                        [[${freeText.getText()}]]
+                    </li>
+                </ol>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</div>
