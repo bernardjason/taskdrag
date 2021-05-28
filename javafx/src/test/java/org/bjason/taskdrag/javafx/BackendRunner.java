@@ -3,6 +3,7 @@ package org.bjason.taskdrag.javafx;
 import org.junit.Assert;
 
 import java.io.File;
+import java.io.FilenameFilter;
 import java.io.IOException;
 import java.net.Socket;
 
@@ -33,7 +34,7 @@ public class BackendRunner {
             File db = new File("testing/themanager.db");
             db.delete();
 
-            File fullPath = new File("../web/target/web-0.0.1-SNAPSHOT.jar");
+            File fullPath = getNewestJar("../web/target");
             ProcessBuilder pb = new ProcessBuilder("java", "-Dspring.profiles.active=prod", "-jar", fullPath.getAbsolutePath());
             File testingDir = new File("testing");
             testingDir.mkdir();
@@ -55,6 +56,29 @@ public class BackendRunner {
             System.out.println("Did not start back end");
             System.exit(0);
         }
+    }
+
+    public static File getNewestJar(String whereToLook)
+    {
+        File directory = new File(whereToLook);
+        File[] files = directory.listFiles((dir, name) -> {
+            if ( name.endsWith(".jar")) return true;
+            return false;
+        });
+        long lastModifiedTime = Long.MIN_VALUE;
+        File chosenFile = null;
+
+        if (files != null) {
+            for (File file : files) {
+                if (file.lastModified() > lastModifiedTime) {
+                    chosenFile = file;
+                    lastModifiedTime = file.lastModified();
+                }
+            }
+        }
+        System.out.println("Start backend with "+chosenFile);
+
+        return chosenFile;
     }
 
     static void forceClose() throws InterruptedException {
