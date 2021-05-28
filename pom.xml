@@ -17,6 +17,9 @@
 	<properties>
 		<java.version>1.8</java.version>
 	</properties>
+  	<scm>
+    		<connection>scm:git:https://github.com/bernardjason/taskdrag.git</connection>
+  	</scm>
 
 	<modules>
 		<module>model</module>
@@ -93,6 +96,16 @@
 						<descriptors>
 							<descriptor>distribution/taskdrag.xml</descriptor>
 						</descriptors>
+					</configuration>
+				</plugin>
+				<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-release-plugin</artifactId>
+					<version>3.0.0-M4</version>
+					<configuration>
+						<tagNameFormat>v@{project.version}</tagNameFormat>
+						<autoVersionSubmodules>true</autoVersionSubmodules>
+						<releaseProfiles>releases</releaseProfiles>
 					</configuration>
 				</plugin>
 			</plugins>
