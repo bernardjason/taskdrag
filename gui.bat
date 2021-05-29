@@ -1,1 +1,4 @@
-java -jar javafx-0.0.1-SNAPSHOT.jar
+FOR /F "tokens=* USEBACKQ" %%F IN (`dir /B javafx*.jar`) DO (
+SET jar=%%F
+)
+java -jar %jar%
