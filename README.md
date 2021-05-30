@@ -48,3 +48,9 @@ With JDK11 start with
 -Djdk.gtk.version=2
 otherwise drag and drop not reliable
 
+
+## make a release
+```
+./mvwn release:prepare
+./mvnw release:perform -Darguments="-Dmaven.deploy.skip=true"
+```
