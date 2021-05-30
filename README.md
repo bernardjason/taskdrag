@@ -10,7 +10,7 @@ work as well as work states, by default in db are created, inprogress, waiting, 
 GUI tests use testfx for javafx front end and Selenium for web. There was a problem with webdrivers and drag
 and drop so this test needs human to do the dragging and dropping. Javafx tests this works as expected.
 
-<a href="videos/taskdrag.mp4" title="demo">demo</a>
+[![demo](/videos/taskdrag.gif)](/videos/taskdrag.gif)
 
 To try out download the latest release
 execute 
