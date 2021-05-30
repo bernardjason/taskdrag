@@ -1,35 +1,50 @@
+# taskdrag
+
+This is a Kanban style to do list with username/password authentication, spring backend with a web and a javafx GUI.
+
+This started as a simple project, have a small play with spring and javafx. Then morphed a little to this.
+
+Backend server is Spring, with Sqlite db store. This holds user/passwords, work items, free text associated with
+work as well as work states, by default in db are created, inprogress, waiting, done then with implicit remove.
+
+GUI tests use testfx for javafx front end and Selenium for web. There was a problem with webdrivers and drag
+and drop so this test needs human to do the dragging and dropping. Javafx tests this works as expected.
+
+<a href="videos/taskdrag.mp4" title="demo">demo</a>
+
+To try out download the latest release
+execute 
+```
+backend.sh
+or 
+backend.bat
+```
+Then for web demo access
+
+http://127.0.0.1:8080
+
+Login as user bernard with a password of jason
+
+Default 4 states created as none exist in Sqlite table task_states
+```
+"created",      "#ffb3b3"
+"inprogress",   "#ccffcc"
+"waiting",      "#ff8888"
+"done",         "#ffff99"
+```
+
+To run the javafx gui (**note** this needs the backend to continue running) execute 
+```
+gui.sh
+or
+gui.bat
+```
+
+To run in dev
 ./mvnw spring-boot:run -Dspring-boot.run.profiles=sqlite   -pl model,database,web
 
+## note about jdk11 and javafx
 With JDK11 start with
 -Djdk.gtk.version=2
 otherwise drag and drop not reliable
 
-TO DO
-done. icon colour for triangle
-
-done . allow order to be changed
-
-done when creating new work put it at top
-
-Done WHY DOESN'T RESIZE WORK FOR TOP BAR? SHOULDN'T IT SQUASH MORE????? Design smallest and use anchor as well.
-
-Done. Add the date to the web interface
-
-Done Add authentication, and add user to the work table
-
-Done Add login window for all
-
-Done Hard core would be ability to add any columns you like
-
-Done change order of freetext to recent first
-
-Done website error handling
-
-Done put users in database
-
-Done automate the web testing?
-
--------------------------------------------------
-
-
-start backend if need be

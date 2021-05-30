@@ -1,8 +1,5 @@
 package org.bjason.taskdrag.database;
 
-import java.util.List;
-import java.util.Optional;
-
 import org.bjason.taskdrag.apimodel.NotFoundException;
 import org.bjason.taskdrag.apimodel.WorkRepository;
 import org.bjason.taskdrag.model.Work;
@@ -13,7 +10,8 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.web.bind.annotation.*;
 
-import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
+import java.util.List;
+import java.util.Optional;
 
 @RestController
 class WorkController {
@@ -91,62 +89,5 @@ class WorkController {
                 .orElseThrow(() -> new NotFoundException("work item "+id));
     }
 
-/*
-    @PostMapping("/hateos/work")
-    EntityModel<Work> h_newWork(@RequestBody Work work) {
-        Work newWork = repository.save(work);
-        return EntityModel.of(newWork, //
-                linkTo(methodOn(WorkController.class).one(newWork.getId())).withSelfRel(),
-                linkTo(methodOn(WorkController.class).all()).withRel("work"));
-    }
 
-    @PutMapping("/hateos/work/{id}")
-    EntityModel<Work>  h_replaceWork(@RequestBody Work newWork, @PathVariable Long id) {
-
-        return repository.findById(id)
-                .map(work -> {
-                    work.setDisplayOrder(newWork.getDisplayOrder());
-                    work.setStatus(newWork.getStatus());
-                    work.setTitle(newWork.getTitle());
-                    repository.save(work);
-                    return EntityModel.of(work, //
-                            linkTo(methodOn(WorkController.class).one(id)).withSelfRel(),
-                            linkTo(methodOn(WorkController.class).all()).withRel("work"));
-                })
-                .orElseGet(() -> {
-                    newWork.setId(id);
-                    repository.save(newWork);
-                    return EntityModel.of(newWork, //
-                            linkTo(methodOn(WorkController.class).one(id)).withSelfRel(),
-                            linkTo(methodOn(WorkController.class).all()).withRel("work"));
-                });
-    }
-
-    @GetMapping("/hateos/work")
-    CollectionModel<Work> h_all() {
-
-        List<Work> all = repository.findAll(Sort.by("status").and(Sort.by(Sort.Direction.DESC,"displayOrder")));
-
-        for (final Work work : all) {
-            Link selfLink = linkTo(methodOn(WorkController.class)
-                    .one(work.getId())).withSelfRel();
-            work.add(selfLink);
-        }
-
-        Link link = linkTo(methodOn(WorkController.class).all()).withSelfRel();
-        CollectionModel<Work> result = CollectionModel.of(all, link);
-        return result;
-    }
-    @GetMapping("/hateos/work/{id}")
-    EntityModel<Work> h_one(@PathVariable Long id) {
-
-        Work work = repository.findById(id) //
-                .orElseThrow(() -> new NotFoundException("work item "+id));
-
-        return EntityModel.of(work, //
-                linkTo(methodOn(WorkController.class).one(id)).withSelfRel(),
-                linkTo(methodOn(WorkController.class).all()).withRel("work"));
-    }
-
- */
 }
