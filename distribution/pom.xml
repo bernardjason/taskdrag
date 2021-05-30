@@ -3,7 +3,7 @@
     <parent>
         <artifactId>taskdrag-parent</artifactId>
         <groupId>org.bjason.taskdrag</groupId>
-        <version>0.0.2</version>
+        <version>0.0.3-SNAPSHOT</version>
     </parent>
     <modelVersion>4.0.0</modelVersion>
     <packaging>pom</packaging>
@@ -17,12 +17,12 @@
         <dependency>
             <groupId>org.bjason.taskdrag</groupId>
             <artifactId>web</artifactId>
-            <version>0.0.2</version>
+            <version>0.0.3-SNAPSHOT</version>
         </dependency>
         <dependency>
             <groupId>org.bjason.taskdrag</groupId>
             <artifactId>javafx</artifactId>
-            <version>0.0.2</version>
+            <version>0.0.3-SNAPSHOT</version>
         </dependency>
     </dependencies>
     <build>
