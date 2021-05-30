@@ -10,7 +10,7 @@
 	</parent>
 	<groupId>org.bjason.taskdrag</groupId>
 	<artifactId>taskdrag-parent</artifactId>
-	<version>0.0.2-SNAPSHOT</version>
+	<version>0.0.2</version>
 	<name>taskdrag</name>
 	<description>Demo project for Spring Boot</description>
 	<properties>
@@ -18,7 +18,7 @@
 	</properties>
   	<scm>
     		<connection>scm:git:https://github.com/bernardjason/taskdrag.git</connection>
-  	  <tag>HEAD</tag>
+  	  <tag>v0.0.2</tag>
   </scm>
 
 	<modules>

@@ -3,7 +3,7 @@
     <parent>
         <artifactId>taskdrag-parent</artifactId>
         <groupId>org.bjason.taskdrag</groupId>
-        <version>0.0.2-SNAPSHOT</version>
+        <version>0.0.2</version>
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
@@ -12,7 +12,7 @@
         <dependency>
             <groupId>org.bjason.taskdrag</groupId>
             <artifactId>model</artifactId>
-            <version>0.0.2-SNAPSHOT</version>
+            <version>0.0.2</version>
             <scope>compile</scope>
         </dependency>
     </dependencies>
