@@ -10,7 +10,7 @@ work as well as work states, by default in db are created, inprogress, waiting, 
 GUI tests use testfx for javafx front end and Selenium for web. There was a problem with webdrivers and drag
 and drop so this test needs human to do the dragging and dropping. Javafx tests this works as expected.
 
-<img src="/videos/taskdrag.gif" width="480"/>
+<img src="/videos/taskdrag.gif" width="640"/>
 
 To try out download the latest release
 execute 
@@ -53,4 +53,9 @@ otherwise drag and drop not reliable
 ```
 ./mvwn release:prepare
 ./mvnw release:perform -Darguments="-Dmaven.deploy.skip=true"
+```
+
+mp4 to gif
+```
+ffmpeg  -i taskdrag.mp4 -vf "fps=5,scale=640:-1:flags=lanczos,split[s0][s1];[s0]palettegen[p];[s1][p]paletteuse" -loop 0 taskdrag.gif
 ```
