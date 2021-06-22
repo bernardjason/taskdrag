@@ -23,7 +23,15 @@ public class SeleniumConfig {
     }
 
     static {
-        System.setProperty("webdriver.gecko.driver", findFile("geckodriver"));
+        String os = System.getProperty("os.name","linux");
+        if ( os.compareToIgnoreCase("linux") == 0 ) {
+            System.setProperty("webdriver.gecko.driver", findFile("geckodriver"));
+        } else if ( os.startsWith("Windows")  ) {
+            System.setProperty("webdriver.gecko.driver", findFile("geckodriver.exe"));
+        } else {
+            System.out.println("Dont have driver for this os");
+            System.exit(-1);
+        }
     }
 
     static private String findFile(String filename) {

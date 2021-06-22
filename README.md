@@ -41,7 +41,7 @@ gui.bat
 ```
 
 To run in dev
-./mvnw spring-boot:run -Dspring-boot.run.profiles=sqlite   -pl model,database,web
+./mvnw spring-boot:run -Dspring-boot.run.profiles=sqlite   -pl common,model,database,web
 
 ## note about jdk11 and javafx
 With JDK11 start with

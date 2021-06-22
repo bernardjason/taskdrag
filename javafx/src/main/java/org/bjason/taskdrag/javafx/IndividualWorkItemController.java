@@ -12,6 +12,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.image.WritableImage;
 import javafx.scene.input.*;
 import javafx.scene.layout.*;
+import javafx.scene.paint.Color;
 import javafx.scene.paint.Paint;
 import javafx.scene.shape.Polygon;
 import javafx.stage.Modality;
@@ -110,6 +111,7 @@ public class IndividualWorkItemController implements UpdateData {
         for (FreeText entry : row.getFreeText()) {
             Label label = new Label(formatCreated(entry) + " " + entry.getText());
             label.setWrapText(true);
+            label.setTextFill(Color.BLACK);
             listView.getItems().add(label);
             listView.setUserData(row);
         }
